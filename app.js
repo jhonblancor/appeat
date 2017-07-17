@@ -1,7 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-const Product = require('models/product.js');
+const Product = require('./models/product.js');
 var app = express();
 
 
@@ -19,22 +19,26 @@ app.get("/", function(solicitud, respuesta){
 });
 
 app.post("/menu", function(solicitud, respuesta){
+	console.log("entre a post/menu");
 	console.log(solicitud.body);
-
+	console.log("pase por solicitud body");
 		let product = new Product();
+console.log("cree el producto");
 
 		product.title = solicitud.body.title
+		console.log("teme valor de title");
 		product.description = solicitud.body.description
-		product.imageUrl = solicitud.body.imageUrl
+console.log("teme valor de description");
 		product.pricing = solicitud.body.pricing
+		console.log("teme valor de precio");
 		product.password = solicitud.body.password
-
+console.log("teme valor de pass");
 		product.save((err, productStored) =>{
-		if(err) res.status(500).send({ message: 'errror al guardar el producto' + err})
-		else{
-			res.status(200).send({product: productStored})
-			respuesta.render("index");
-		}
+	console.log("lo guarde");
+			console.log(product);
+				respuesta.render("index");
+	
+		
 		
 	})
 
@@ -46,13 +50,13 @@ respuesta.render("menu/new");
 });
 
 
-mongoose.connect("mongodb://localhost/primera_web", (err, res) =>{
+mongoose.connect("mongodb://localhost/eatapp", (err, res) =>{
 	if(err){
 		console.log('error al intentar conectar con la base de datos'+err);
 	}else{
 		console.log('Conexion exitosa...!');
 	}
 	app.listen(8085, ()=>{
-		Console.log('API Corriendo ')
-	});
+		console.log('API Corriendo ')
+	})
 });
